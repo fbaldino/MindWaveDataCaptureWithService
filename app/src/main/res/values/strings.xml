@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Mindwavedatacapturewithservice</string>
+    <string name="LogTag">MindWaveDataCapture</string>
+    <string name="StartCapture">Start Capture</string>
+    <string name="StopCapture">Stop Capture</string>
+    <string name="SetNewParams">Set Params</string>
+    <string name="Focused">I am working with focus</string>
+    <string name="WaitingForAction">Waiting for your command</string>
+    <string name="WhoamI">Who am I?</string>
+    <string name="WhatamIDoing">What am I doing?</string>
+    <string name="PermissionGranted">Permission Granted</string>
+
+</resources>

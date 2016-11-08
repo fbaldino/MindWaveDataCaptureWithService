@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="mindwavedatacapture.android.fbaldino.com.mindwavedatacapturewithservice.MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/WaitingForAction"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/TxtLine"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:lineSpacingExtra="10sp"
+        android:keepScreenOn="true" />
+
+    <Button
+        android:text="ChooseDeviceAndStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnChooseDevice"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtLine"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="162dp"
+        android:id="@+id/TxtFile" />
+
+    <Button
+        android:text="@string/StartCapture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnConecttomindwave"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/StopCapture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BtnStopCapture"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btnConecttomindwave"
+        android:layout_toEndOf="@+id/btnConecttomindwave"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp" />
+
+    <Button
+        android:text="@string/SetNewParams"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnChooseDevice"
+        android:layout_toRightOf="@+id/BtnStopCapture"
+        android:layout_toEndOf="@+id/BtnStopCapture"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:id="@+id/BtnSetParams" />
+
+    <CheckBox
+        android:text="@string/Focused"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/CkbFocused"
+        android:layout_below="@+id/TxtLine"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="@string/WhoamI"
+        android:ems="10"
+        android:layout_below="@+id/CkbFocused"
+        android:layout_toRightOf="@+id/TxtFile"
+        android:id="@+id/EdtWhoamI"
+        android:textSize="18sp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="@string/WhatamIDoing"
+        android:ems="10"
+        android:id="@+id/EdtActivity"
+        android:textSize="18sp"
+        android:layout_below="@+id/EdtWhoamI"
+        android:layout_toRightOf="@+id/TxtFile"
+        android:layout_toEndOf="@+id/TxtFile" />
+
+</RelativeLayout>
