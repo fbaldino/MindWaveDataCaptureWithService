@@ -9,5 +9,7 @@
     <string name="WhoamI">Who am I?</string>
     <string name="WhatamIDoing">What am I doing?</string>
     <string name="PermissionGranted">Permission Granted</string>
-
+    <string name="PrefsWhoamI">StrWhoamI</string>;
+    <string name="PrefsStrActivity">StrActivity</string>;
+    <string name="PrefsIsUserFocused">StrIsUserFocused</string>;
 </resources>

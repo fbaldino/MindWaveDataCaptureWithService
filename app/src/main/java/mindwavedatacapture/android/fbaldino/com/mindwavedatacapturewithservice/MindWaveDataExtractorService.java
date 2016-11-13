@@ -54,9 +54,9 @@ public class MindWaveDataExtractorService extends Service {
     byte[] readBuffer;
     int readBufferPosition;
     public static byte[] mindwavemessage;
-    static String StrWhoamI="";
-    static String StrActivity="";
-    static String StrIsUserFocused="";
+    private static String StrWhoamI="";
+    private static String StrActivity="";
+    private static String StrIsUserFocused="";
 
 
     //Bluetoorh and file variables
@@ -94,22 +94,21 @@ public class MindWaveDataExtractorService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         MyTAG= getResources().getString(R.string.LogTag);
-        Log.i(MyTAG, "Service onStartCommand");
-        StrWhoamI="";
-        StrActivity="";
-        StrIsUserFocused="";
 
-        StrWhoamI=intent.getStringExtra("STRWhoami");
-        StrIsUserFocused= intent.getStringExtra("STRUSerIsWorkingWithFocus");
-        StrActivity= intent.getStringExtra("STRActivity");
-       // beginListenForData();
-        findMindWaveBT();
-        try {
-            openBT();
-        }
-        catch ( Exception e){
-            e.printStackTrace();
-        }
+            Log.i(MyTAG, "Service onStartCommand");
+            StrWhoamI = "";
+            StrActivity = "";
+            StrIsUserFocused = "";
+            StrWhoamI = new String(intent.getStringExtra("STRWhoami"));
+            StrIsUserFocused = new String(intent.getStringExtra("STRUSerIsWorkingWithFocus"));
+            StrActivity = new String(intent.getStringExtra("STRActivity"));
+            // beginListenForData();
+            findMindWaveBT();
+            try {
+                openBT();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         return  START_STICKY;
     }
 
@@ -159,7 +158,7 @@ public class MindWaveDataExtractorService extends Service {
                                     //put here call bo broadcast line
                                     WriteEntryinLogfile(LogFileName, previouspackageString);
                                     publishResults(previouspackageString, LogFileName, RESULT_OK);
-
+                                    Log.d(MyTAG,"seqNumber"+seqnumber);
                                 }
                                 mindwavecount = 0;
                                 mindwavemessage[mindwavecount] = (byte) previous;
@@ -489,6 +488,7 @@ public class MindWaveDataExtractorService extends Service {
     public void onDestroy( )
     {
         stopWorker=true;
+
 /*        try {
             wait(1000);
         } catch (InterruptedException e) {

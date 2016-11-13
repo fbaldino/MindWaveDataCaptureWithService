@@ -77,21 +77,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/CkbFocused"
+        android:layout_marginTop="12dp"
         android:layout_below="@+id/TxtLine"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text="@string/WhoamI"
-        android:ems="10"
-        android:layout_below="@+id/CkbFocused"
-        android:layout_toRightOf="@+id/TxtFile"
-        android:id="@+id/EdtWhoamI"
-        android:textSize="18sp" />
+        android:layout_toStartOf="@+id/BtnSetParams"
+        android:layout_marginEnd="41dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -102,7 +91,38 @@
         android:id="@+id/EdtActivity"
         android:textSize="18sp"
         android:layout_below="@+id/EdtWhoamI"
-        android:layout_toRightOf="@+id/TxtFile"
-        android:layout_toEndOf="@+id/TxtFile" />
+        android:layout_alignStart="@+id/EdtWhoamI" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="@string/WhoamI"
+        android:ems="10"
+        android:id="@+id/EdtWhoamI"
+        android:textSize="18sp"
+        android:layout_below="@+id/CkbFocused"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="35dp" />
+
+    <TextView
+        android:text="Activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/EdtActivity"
+        android:layout_alignBottom="@+id/EdtActivity"
+        android:layout_toStartOf="@+id/EdtActivity" />
+
+    <TextView
+        android:text="User Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/EdtWhoamI"
+        android:layout_alignBottom="@+id/EdtWhoamI"
+        android:layout_toStartOf="@+id/EdtWhoamI" />
 
 </RelativeLayout>

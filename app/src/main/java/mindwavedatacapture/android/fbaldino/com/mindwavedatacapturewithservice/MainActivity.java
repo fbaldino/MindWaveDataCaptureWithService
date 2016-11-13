@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -24,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         private TextView TVLine;
         private TextView TxtFile;
-        private Button BtnChooseDevice;
+//        private Button BtnChooseDevice;
         private Button BtnConnectandstarmindwave;
         private BluetoothAdapter mBluetoothAdapter;
-
+        private static boolean ServiceIsRunning=false;
         private CheckBox CkbFocused;
         private EditText EdtActivity;
         private EditText EdtWhoami;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+//            SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
             MyTAG= getResources().getString(R.string.LogTag);
             setContentView(R.layout.activity_main);
             requestpermissions();
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //   try {
+                    Log.d(MyTAG,"Start Capture Clicked");
                     BtnStopCapture.setEnabled(true);
                     BtnSetParams.setEnabled(true);
 
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     //                   Startopenfileforwrite(LogFileName);
                     BtnConnectandstarmindwave.setEnabled(false);
                     startService(intent);
+                    ServiceIsRunning=true;
 
                     //  openBT();
 
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     //   }
                 }
             });
+
 
             BtnSetParams.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -116,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             BtnStopCapture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Log.d(MyTAG,"stop service button clicked");
                     BtnStopCapture.setEnabled(false);
                     //   stopWorker = true;
                     BtnSetParams.setEnabled(false);
@@ -125,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     EdtActivity.setEnabled(true);
                     EdtWhoami.setEnabled(true);
                     CkbFocused.setEnabled(true);
+                    ServiceIsRunning=false;
                     stopService(intent);
 
 
@@ -145,8 +152,8 @@ public class MainActivity extends AppCompatActivity {
 
 
             TVLine = (TextView) findViewById(R.id.TxtLine);
-            BtnChooseDevice = (Button) findViewById(R.id.btnChooseDevice);
-            BtnChooseDevice.setOnClickListener(new View.OnClickListener() {
+            //BtnChooseDevice = (Button) findViewById(R.id.btnChooseDevice);
+      /*      BtnChooseDevice.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
@@ -159,10 +166,10 @@ public class MainActivity extends AppCompatActivity {
                 badPacketCount = 0;
                 tv_SavingtoFile.setText("Savibg to file "+LogFileName);
                 Startopenfileforwrite(LogFileName);
-                start();*/
+                start();*//*
                 }
             });
-
+*/
             try {
                 // TODO
                 mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -182,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+//            ServiceIsRunning=false;
         }
         private void requestpermissions() {
             // Here, thisActivity is the current activity
@@ -246,16 +254,76 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        @Override
-        protected void onResume() {
-            super.onResume();
-            registerReceiver(Servicereceiver, new IntentFilter(
-                    MindWaveDataExtractorService.NOTIFICATIONFromService));
+
+    protected void onStart() {
+        Log.d(MyTAG,"onStart Called");
+        super.onStart();
+        registerReceiver(Servicereceiver, new IntentFilter(
+                MindWaveDataExtractorService.NOTIFICATIONFromService));
+        if (ServiceIsRunning)
+        {
+            EdtWhoami.setText(StrWhoamI);
+            EdtActivity.setText(StrActivity);
+            CkbFocused.setChecked(StrIsUserFocused.equals("1"));
+            EdtActivity.setEnabled(false);
+            EdtWhoami.setEnabled(false);
+            CkbFocused.setEnabled(false);
+            BtnStopCapture.setEnabled(true);
+            BtnSetParams.setEnabled(true);
+            BtnConnectandstarmindwave.setEnabled(false);
         }
+        else
+        {
+            SharedPreferences sharedPref;
+            sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            StrActivity = sharedPref.getString(getString(R.string.PrefsStrActivity), "");
+            StrWhoamI= sharedPref.getString(getString(R.string.PrefsWhoamI), "");
+            StrIsUserFocused= sharedPref.getString(getString(R.string.PrefsIsUserFocused), "0");
+
+            EdtWhoami.setText(StrWhoamI);
+            EdtActivity.setText(StrActivity);
+            CkbFocused.setChecked(StrIsUserFocused.equals("1"));
+            EdtActivity.setEnabled(true);
+            EdtWhoami.setEnabled(true);
+            CkbFocused.setEnabled(true);
+            BtnStopCapture.setEnabled(false);
+            BtnSetParams.setEnabled(false);
+            BtnConnectandstarmindwave.setEnabled(true);
+        }
+
+    }
+
+
+
         @Override
         protected void onPause() {
+ //          unregisterReceiver(Servicereceiver);
+
             super.onPause();
+
+
+        }
+        @Override
+        public void onStop() {
             unregisterReceiver(Servicereceiver);
+            super.onStop();
+            Log.d(MyTAG, "app stoped");
+            SharedPreferences sharedPref;
+            sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.PrefsStrActivity), StrActivity );
+            editor.putString(getString(R.string.PrefsWhoamI), StrWhoamI);
+            editor.putString(getString(R.string.PrefsIsUserFocused), StrIsUserFocused);
+            editor.commit();
+        }
+        @Override
+        protected void onDestroy() {
+         //  unregisterReceiver(Servicereceiver);
+            Intent intent = new Intent(MainActivity.this, MindWaveDataExtractorService.class);
+            stopService(intent);
+
+            super.onDestroy();
+
         }
 
         private BroadcastReceiver Servicereceiver = new BroadcastReceiver() {
